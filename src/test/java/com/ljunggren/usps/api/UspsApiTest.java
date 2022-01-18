@@ -59,8 +59,8 @@ public class UspsApiTest {
         String xml = readFromResources("/trackingResponse.xml");
         setup(xml, 200);
         UspsEnvironment environment = UspsEnvironment.TESTING;
-        UspsApi uspsApi = new UspsApi(environment, xml, httpClient);
-        TrackingResponse trackingResponse = uspsApi.track("12345");
+        UspsApi uspsApi = new UspsApi(environment, xml);
+        TrackingResponse trackingResponse = uspsApi.track("12345", httpClient);
         assertNotNull(trackingResponse.getTrackInfo());
         assertNull(trackingResponse.getError());
     }
@@ -71,8 +71,8 @@ public class UspsApiTest {
         setup(xml, 200);
         ErrorResponse errorResponse = XmlUtils.xmlToObject(xml, ErrorResponse.class);
         UspsEnvironment environment = UspsEnvironment.TESTING;
-        UspsApi uspsApi = new UspsApi(environment, xml, httpClient);
-        TrackingResponse trackingResponse = uspsApi.track("12345");
+        UspsApi uspsApi = new UspsApi(environment, xml);
+        TrackingResponse trackingResponse = uspsApi.track("12345", httpClient);
         assertEquals(errorResponse.getDescription(), trackingResponse.getError());
         assertNull(trackingResponse.getTrackInfo());
     }
@@ -82,8 +82,8 @@ public class UspsApiTest {
         String xml = "notRealResponse";
         setup(xml, 407);
         UspsEnvironment environment = UspsEnvironment.TESTING;
-        UspsApi uspsApi = new UspsApi(environment, xml, httpClient);
-        TrackingResponse trackingResponse = uspsApi.track("12345");
+        UspsApi uspsApi = new UspsApi(environment, xml);
+        TrackingResponse trackingResponse = uspsApi.track("12345", httpClient);
         assertEquals("Response code 407", trackingResponse.getError());
         assertNull(trackingResponse.getTrackInfo());
     }
@@ -93,8 +93,8 @@ public class UspsApiTest {
         String xml = "notRealResponse";
         setup(xml, 200);
         UspsEnvironment environment = UspsEnvironment.TESTING;
-        UspsApi uspsApi = new UspsApi(environment, xml, httpClient);
-        TrackingResponse trackingResponse = uspsApi.track("12345");
+        UspsApi uspsApi = new UspsApi(environment, xml);
+        TrackingResponse trackingResponse = uspsApi.track("12345", httpClient);
         assertEquals("Unable to parse response", trackingResponse.getError());
         assertNull(trackingResponse.getTrackInfo());
     }

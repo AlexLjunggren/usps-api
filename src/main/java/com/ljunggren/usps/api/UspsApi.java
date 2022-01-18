@@ -26,20 +26,18 @@ public class UspsApi {
 
     private String username;
     private UspsProperties properties;
-    private CloseableHttpClient httpClient = HttpClients.custom().build();
-    
-    // package private for unit testing
-    UspsApi(UspsEnvironment environment, String username, CloseableHttpClient httpClient) {
-        this(environment, username);
-        this.httpClient = httpClient;
-    }
     
     public UspsApi(UspsEnvironment environment, String username) {
         this.username = username;
         this.properties = new UspsProperties(environment);
     }
     
-    public TrackingResponse track(String trackingNumber) {
+    public TrackingResponse track(String trackingNumber) throws IOException {
+        return track(trackingNumber, HttpClients.createDefault());
+    }
+    
+    // package private for unit testing
+    TrackingResponse track(String trackingNumber, CloseableHttpClient httpClient) throws IOException {
         String url = properties.getTrackingUrl();
         HttpPost post = new HttpPost(url);
         try {
@@ -58,6 +56,8 @@ public class UspsApi {
             return new TrackingResponse(null, String.format("Response code %d", responseCode));
         } catch (Exception e) {
             return new TrackingResponse(null, e.getMessage());
+        } finally {
+            httpClient.close();
         }
     }
     
