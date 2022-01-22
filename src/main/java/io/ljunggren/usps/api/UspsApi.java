@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api;
+package io.ljunggren.usps.api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,11 +16,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.ljunggren.usps.api.tracking.request.TrackId;
-import com.ljunggren.usps.api.tracking.request.TrackingRequest;
-import com.ljunggren.usps.api.tracking.response.ErrorResponse;
-import com.ljunggren.usps.api.tracking.response.TrackingResponse;
-import com.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.usps.api.tracking.request.TrackId;
+import io.ljunggren.usps.api.tracking.request.TrackingRequest;
+import io.ljunggren.usps.api.tracking.response.ErrorResponse;
+import io.ljunggren.usps.api.tracking.response.TrackingResponse;
+import io.ljunggren.xmlUtils.XmlUtils;
 
 public class UspsApi {
 

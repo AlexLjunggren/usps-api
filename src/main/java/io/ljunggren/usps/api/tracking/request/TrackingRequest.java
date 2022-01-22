@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api.tracking.request;
+package io.ljunggren.usps.api.tracking.request;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;

@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api;
+package io.ljunggren.usps.api;
 
 public enum UspsEnvironment {
 

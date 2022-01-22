@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api;
+package io.ljunggren.usps.api;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -22,9 +22,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.ljunggren.usps.api.tracking.response.ErrorResponse;
-import com.ljunggren.usps.api.tracking.response.TrackingResponse;
-import com.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.usps.api.tracking.response.ErrorResponse;
+import io.ljunggren.usps.api.tracking.response.TrackingResponse;
+import io.ljunggren.xmlUtils.XmlUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UspsApiTest {

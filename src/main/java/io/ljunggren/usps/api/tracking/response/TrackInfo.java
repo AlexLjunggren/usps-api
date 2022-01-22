@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api.tracking.response;
+package io.ljunggren.usps.api.tracking.response;
 
 import java.util.List;
 

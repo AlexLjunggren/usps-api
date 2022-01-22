@@ -1,4 +1,4 @@
-package com.ljunggren.usps.api.tracking.response;
+package io.ljunggren.usps.api.tracking.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;

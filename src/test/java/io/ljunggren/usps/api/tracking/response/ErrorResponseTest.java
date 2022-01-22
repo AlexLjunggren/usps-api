@@ -1,13 +1,13 @@
-package com.ljunggren.usps.api.tracking.response;
+package io.ljunggren.usps.api.tracking.response;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import com.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.xmlUtils.XmlUtils;
 
 public class ErrorResponseTest {
 

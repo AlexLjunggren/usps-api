@@ -1,6 +1,6 @@
-package com.ljunggren.usps.api;
+package io.ljunggren.usps.api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
