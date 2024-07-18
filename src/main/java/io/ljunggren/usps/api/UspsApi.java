@@ -28,8 +28,8 @@ public class UspsApi {
     private UspsProperties properties;
     
     public UspsApi(UspsEnvironment environment, String username) {
-        this.username = username;
         this.properties = new UspsProperties(environment);
+        this.username = username;
     }
     
     public TrackingResponse track(String trackingNumber) throws IOException {
