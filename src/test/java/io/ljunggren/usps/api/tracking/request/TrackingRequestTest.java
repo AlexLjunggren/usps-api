@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
-import io.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.xml.utils.XmlUtils;
 
 public class TrackingRequestTest {
 

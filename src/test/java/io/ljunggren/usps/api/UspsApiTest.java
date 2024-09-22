@@ -24,7 +24,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import io.ljunggren.usps.api.tracking.response.ErrorResponse;
 import io.ljunggren.usps.api.tracking.response.TrackingResponse;
-import io.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.xml.utils.XmlUtils;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UspsApiTest {

@@ -20,7 +20,7 @@ import io.ljunggren.usps.api.tracking.request.TrackId;
 import io.ljunggren.usps.api.tracking.request.TrackingRequest;
 import io.ljunggren.usps.api.tracking.response.ErrorResponse;
 import io.ljunggren.usps.api.tracking.response.TrackingResponse;
-import io.ljunggren.xmlUtils.XmlUtils;
+import io.ljunggren.xml.utils.XmlUtils;
 
 public class UspsApi {
 
