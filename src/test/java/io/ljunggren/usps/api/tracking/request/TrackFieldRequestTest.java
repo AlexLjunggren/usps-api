@@ -1,4 +1,4 @@
-package io.ljunggren.usps.api.tracking.response;
+package io.ljunggren.usps.api.tracking.request;
 
 import static org.junit.Assert.assertTrue;
 
@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import io.ljunggren.xml.utils.XmlUtils;
 
-public class ErrorResponseTest {
+public class TrackFieldRequestTest {
 
     private String readFromResources(String file) throws IOException {
         return IOUtils.toString(this.getClass().getResourceAsStream(file), "UTF-8");
@@ -17,9 +17,9 @@ public class ErrorResponseTest {
 
     @Test
     public void serializeTest() throws IOException {
-        String xml = readFromResources("/authorizationErrorResponse.xml");
-        ErrorResponse errorResponse = XmlUtils.xmlToObject(xml, ErrorResponse.class);
-        String serializedXml = XmlUtils.objectToXml(errorResponse);
+        String xml = readFromResources("/trackFieldRequest.xml");
+        TrackFieldRequest request = XmlUtils.xmlToObject(xml, TrackFieldRequest.class);
+        String serializedXml = XmlUtils.objectToXml(request);
         assertTrue(XmlUtils.areEqual(xml, serializedXml));
     }
 
