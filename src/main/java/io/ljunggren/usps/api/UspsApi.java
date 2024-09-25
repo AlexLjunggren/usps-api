@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -16,9 +17,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-import io.ljunggren.usps.api.tracking.request.TrackId;
-import io.ljunggren.usps.api.tracking.request.TrackingRequest;
-import io.ljunggren.usps.api.tracking.response.ErrorResponse;
+import io.ljunggren.usps.api.tracking.request.TrackFieldRequest;
+import io.ljunggren.usps.api.tracking.response.Error;
+import io.ljunggren.usps.api.tracking.response.TrackInfo;
 import io.ljunggren.usps.api.tracking.response.TrackingResponse;
 import io.ljunggren.xml.utils.XmlUtils;
 
@@ -32,16 +33,12 @@ public class UspsApi {
         this.username = username;
     }
     
-    public TrackingResponse track(String trackingNumber) throws IOException {
-        return track(trackingNumber, HttpClients.createDefault());
-    }
-    
-    // package private for unit testing
-    TrackingResponse track(String trackingNumber, CloseableHttpClient httpClient) throws IOException {
+    public TrackingResponse track(String... trackingNumbers) throws IOException {
+        CloseableHttpClient httpClient = HttpClients.createDefault();
         String url = properties.getTrackingUrl();
         HttpPost post = new HttpPost(url);
         try {
-            String xmlRequest = XmlUtils.objectToXml(generateTrackingRequest(trackingNumber));
+            String xmlRequest = XmlUtils.objectToXml(generateTrackingRequest(trackingNumbers));
             List<NameValuePair> params = Arrays.asList(new NameValuePair[] {
                     new BasicNameValuePair("api", "trackV2"),
                     new BasicNameValuePair("xml", xmlRequest)
@@ -53,17 +50,19 @@ public class UspsApi {
                 String xml = getResult(httpResponse);
                 return parseTrackingResponse(xml);
             }
-            return new TrackingResponse(null, String.format("Response code %d", responseCode));
+            return generateError(String.format("Response code %d", responseCode));
         } catch (Exception e) {
-            return new TrackingResponse(null, e.getMessage());
+            return generateError(e.getMessage());
         } finally {
             httpClient.close();
         }
     }
     
-    private TrackingRequest generateTrackingRequest(String trackingNumber) {
-        TrackId trackId = new TrackId(trackingNumber);
-        return new TrackingRequest(username, trackId);
+    private TrackFieldRequest generateTrackingRequest(String... trackingNumbers) {
+        TrackFieldRequest request = new TrackFieldRequest();
+        request.setUserId(username);
+        Stream.of(trackingNumbers).forEach(trackingNumber -> request.addTrackingNumber(trackingNumber));
+        return request;
     }
     
     private TrackingResponse parseTrackingResponse(String xml) throws Exception {
@@ -71,8 +70,7 @@ public class UspsApi {
             return parse(xml, TrackingResponse.class);
         }
         catch (Exception e) {
-            ErrorResponse errorResponse = parse(xml, ErrorResponse.class);
-            return new TrackingResponse(null, errorResponse.getDescription());
+            return generateError(e.getMessage());
         }
     }
     
@@ -92,6 +90,15 @@ public class UspsApi {
             result.append(line);
         }
         return result.toString();
+    }
+    
+    private TrackingResponse generateError(String message) {
+        TrackingResponse response = new TrackingResponse();
+        TrackInfo trackInfo = new TrackInfo();
+        Error error = new Error(0, message);
+        trackInfo.setError(error);
+        response.addTrackInfo(trackInfo);
+        return response;
     }
     
 }
